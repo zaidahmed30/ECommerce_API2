@@ -5,11 +5,10 @@ using ECommerce_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Database
 builder.Services.AddSingleton<DapperContext>();
 
-// Dependency Injection
 builder.Services.AddScoped<ICategory, CategoryService>();
+builder.Services.AddScoped<IProduct, ProductService>();
 
 // Controllers
 builder.Services.AddControllers();

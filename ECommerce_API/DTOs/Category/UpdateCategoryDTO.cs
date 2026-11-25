@@ -9,5 +9,6 @@ namespace ECommerce_API.DTOs.Category
         [Required]
         public string Slug { get; set; }
         public bool IsActive { get; set; }
+        public object Price { get; internal set; }
     }
 }
