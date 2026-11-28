@@ -41,24 +41,61 @@ namespace ECommerce_API.Services
             return await connection.QuerySingleAsync<long>(query, parameters);
         }
 
-        public Task<bool> DeleteCart(long id)
+        public async Task<bool> DeleteCart(long id)
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            string query = @"
+                DELETE FROM Carts
+                WHERE Id = @Id";
+
+            int rows = await connection.ExecuteAsync(query, new { Id = id });
+            return rows > 0;
         }
 
-        public Task<IEnumerable<CartResponseDTO>> GetAllCarts()
+        public async Task<IEnumerable<CartResponseDTO>> GetAllCarts()
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            string query = @"
+                SELECT
+                    Id,
+                    UserId,
+                    CreatedAtUtc,
+                    UpdatedAtUtc
+                FROM Carts";
+            return await connection.QueryAsync<CartResponseDTO>(query);
         }
 
-        public Task<CartResponseDTO> GetCartById(long id)
+        public async Task<CartResponseDTO> GetCartById(long id)
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            string query = @"
+                SELECT
+                    Id,
+                    UserId,
+                    CreatedAtUtc,
+                    UpdatedAtUtc
+                FROM Carts
+                WHERE Id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<CartResponseDTO>(query, new { Id = id });
         }
 
-        public Task<bool> UpdateCart(long id)
+        public async Task<bool> UpdateCart(long id)
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            string query = @"
+                UPDATE Carts
+                SET UpdatedAtUtc = @UpdatedAtUtc
+                WHERE Id = @Id";
+
+            int rows = await connection.ExecuteAsync(
+                query,
+                new
+                {
+                    Id = id,
+                    UpdatedAtUtc = DateTime.UtcNow
+                }
+            );
+            return rows > 0;
         }
     }
 }

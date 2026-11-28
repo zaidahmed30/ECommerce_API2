@@ -9,6 +9,8 @@ builder.Services.AddSingleton<DapperContext>();
 
 builder.Services.AddScoped<ICategory, CategoryService>();
 builder.Services.AddScoped<IProduct, ProductService>();
+builder.Services.AddScoped<ICart, CartService>();
+builder.Services.AddScoped<ICartItem, CartItemService>();
 //builder.Services.AddScoped<IOrder, OrderService>();
 
 // Controllers
